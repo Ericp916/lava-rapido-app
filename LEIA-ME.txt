@@ -1,2 +1,10 @@
-Ajuste 03 - corrige tela branca causada por nome incorreto da função de telefone no Ajuste 02.
-Substitua os arquivos sobre a pasta lava-rapido-app e reinicie o Vite.
+ATUALIZAÇÃO 04 - USUÁRIOS
+
+IMPORTANTE: não basta descompactar e publicar.
+A ordem correta é:
+1) Executar supabase/002_usuarios.sql no SQL Editor.
+2) Criar/deployar a Edge Function auth-login.
+3) Criar/deployar a Edge Function manage-users.
+4) Só então copiar estes arquivos para o projeto React, testar e enviar ao GitHub.
+
+Leia ATUALIZACAO-USUARIOS.md.

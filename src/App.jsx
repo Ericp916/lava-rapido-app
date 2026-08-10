@@ -8,6 +8,7 @@ import NewServicePage from './pages/NewServicePage'
 import PendingPage from './pages/PendingPage'
 import HistoryPage from './pages/HistoryPage'
 import ReportsPage from './pages/ReportsPage'
+import UsersPage from './pages/UsersPage'
 
 const pages = {
   dashboard: ['Dashboard', DashboardPage],
@@ -15,13 +16,27 @@ const pages = {
   pendentes: ['Pendentes', PendingPage],
   historico: ['Histórico', HistoryPage],
   relatorios: ['Relatórios', ReportsPage],
+  usuarios: ['Usuários', UsersPage],
 }
 
 export default function App() {
-  const { session, loading } = useAuth()
+  const { session, loading, isAdmin } = useAuth()
   const route = useHashRoute('dashboard')
+
   if (loading) return <div className="min-h-screen bg-white"><Loading label="Abrindo sistema..." /></div>
   if (!session) return <LoginPage />
-  const [title, Page] = pages[route] || pages.dashboard
-  return <Layout route={pages[route] ? route : 'dashboard'} title={title}><Page /></Layout>
+
+  const safeRoute = pages[route] ? route : 'dashboard'
+  const [title, Page] = pages[safeRoute]
+
+  if (safeRoute === 'usuarios' && !isAdmin) {
+    return <Layout route="dashboard" title="Acesso restrito">
+      <div className="card text-center">
+        <p className="text-base font-black text-slate-900">Área exclusiva do administrador.</p>
+        <p className="mt-2 text-sm text-slate-500">Seu usuário não possui permissão para gerenciar acessos.</p>
+      </div>
+    </Layout>
+  }
+
+  return <Layout route={safeRoute} title={title}><Page /></Layout>
 }

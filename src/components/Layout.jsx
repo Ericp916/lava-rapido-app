@@ -11,12 +11,16 @@ const items = [
 ]
 
 export default function Layout({ route, title, children }) {
-  const { logout } = useAuth()
+  const { logout, profile } = useAuth()
   return (
     <div className="min-h-screen bg-[#f5f7fb] pb-24">
       <header className="safe-top sticky top-0 z-20 border-b border-slate-100 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
-          <div><p className="text-xs font-bold uppercase tracking-[.18em] text-blue-700">Lava Rápido</p><h1 className="text-lg font-black text-[#0b1f3a]">{title}</h1></div>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[.18em] text-blue-700">Lava Rápido</p>
+            <h1 className="text-lg font-black text-[#0b1f3a]">{title}</h1>
+            {profile?.nome && <p className="mt-0.5 text-[11px] font-semibold text-slate-400">{profile.nome}</p>}
+          </div>
           <button onClick={logout} className="grid h-11 w-11 place-items-center rounded-2xl bg-slate-100 text-slate-700" aria-label="Sair"><LogOutIcon className="h-5 w-5" /></button>
         </div>
       </header>

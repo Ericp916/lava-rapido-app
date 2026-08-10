@@ -4,9 +4,11 @@ import { currency, localDayRange } from '../lib/format'
 import { navigate } from '../hooks/useHashRoute'
 import StatCard from '../components/StatCard'
 import Loading from '../components/Loading'
-import { ChartIcon, ClockIcon, PlusIcon, SearchIcon } from '../components/Icons'
+import { ChartIcon, ClockIcon, PlusIcon, SearchIcon, UsersIcon } from '../components/Icons'
+import { useAuth } from '../context/AuthContext'
 
 export default function DashboardPage() {
+  const { isAdmin } = useAuth()
   const [stats, setStats] = useState(null)
   const [error, setError] = useState('')
 
@@ -34,6 +36,7 @@ export default function DashboardPage() {
       <Action icon={ClockIcon} title="Pendentes" subtitle="Cobrar e registrar pagamentos" onClick={() => navigate('pendentes')} />
       <Action icon={SearchIcon} title="Histórico" subtitle="Buscar cliente ou veículo" onClick={() => navigate('historico')} />
       <Action icon={ChartIcon} title="Relatórios" subtitle="Diário, semanal e mensal" onClick={() => navigate('relatorios')} />
+      {isAdmin && <Action icon={UsersIcon} title="Usuários" subtitle="Criar e gerenciar acessos" onClick={() => navigate('usuarios')} />}
     </div>
   </>
 }

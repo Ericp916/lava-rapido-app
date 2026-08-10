@@ -1,0 +1,7 @@
+# Configuração das Edge Functions desta atualização.
+# Ambas validam autenticação dentro do próprio código.
+[functions.auth-login]
+verify_jwt = false
+
+[functions.manage-users]
+verify_jwt = false
