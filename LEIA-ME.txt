@@ -1,0 +1,2 @@
+Ajuste 03 - corrige tela branca causada por nome incorreto da função de telefone no Ajuste 02.
+Substitua os arquivos sobre a pasta lava-rapido-app e reinicie o Vite.

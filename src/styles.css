@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #10213a;
+  background: #f5f7fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html { background: #f5f7fb; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button, input, select { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+.safe-bottom { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+.safe-top { padding-top: max(.5rem, env(safe-area-inset-top)); }
+
+.input {
+  @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-base outline-none transition focus:border-blue-700 focus:ring-4 focus:ring-blue-100;
+}
+.label { @apply mb-1.5 block text-sm font-semibold text-slate-700; }
+.card { @apply rounded-3xl border border-slate-100 bg-white p-4 shadow-sm; }
+.btn-primary { @apply flex min-h-12 w-full items-center justify-center rounded-2xl bg-[#0b1f3a] px-4 py-3 font-bold text-white shadow-sm transition active:scale-[.99] disabled:cursor-not-allowed disabled:opacity-60; }
+.btn-secondary { @apply flex min-h-12 w-full items-center justify-center rounded-2xl border border-slate-200 bg-white px-4 py-3 font-bold text-slate-800 transition active:scale-[.99]; }
+.badge-paid { @apply inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700; }
+.badge-pending { @apply inline-flex rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700; }

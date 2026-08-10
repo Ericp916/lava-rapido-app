@@ -1,0 +1,14 @@
+{
+  "name": "Lava Rápido - Gestão",
+  "short_name": "Lava Rápido",
+  "description": "Gestão de atendimentos, clientes, pagamentos e relatórios.",
+  "start_url": "/#dashboard",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b1f3a",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
