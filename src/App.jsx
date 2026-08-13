@@ -9,11 +9,13 @@ import PendingPage from './pages/PendingPage'
 import HistoryPage from './pages/HistoryPage'
 import ReportsPage from './pages/ReportsPage'
 import UsersPage from './pages/UsersPage'
+import ExpensesPage from './pages/ExpensesPage'
 
 const pages = {
   dashboard: ['Dashboard', DashboardPage],
   novo: ['Novo Atendimento', NewServicePage],
   pendentes: ['Pendentes', PendingPage],
+  saidas: ['Saídas', ExpensesPage],
   historico: ['Histórico', HistoryPage],
   relatorios: ['Relatórios', ReportsPage],
   usuarios: ['Usuários', UsersPage],

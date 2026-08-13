@@ -1,11 +1,12 @@
 import { useAuth } from '../context/AuthContext'
 import { navigate } from '../hooks/useHashRoute'
-import { ChartIcon, ClockIcon, HomeIcon, LogOutIcon, PlusIcon, SearchIcon } from './Icons'
+import { CashOutIcon, ChartIcon, ClockIcon, HomeIcon, LogOutIcon, PlusIcon, SearchIcon } from './Icons'
 
 const items = [
   ['dashboard', 'Início', HomeIcon],
   ['novo', 'Novo', PlusIcon],
   ['pendentes', 'Pendentes', ClockIcon],
+  ['saidas', 'Saídas', CashOutIcon],
   ['historico', 'Histórico', SearchIcon],
   ['relatorios', 'Relatórios', ChartIcon],
 ]
@@ -25,11 +26,11 @@ export default function Layout({ route, title, children }) {
         </div>
       </header>
       <main className="mx-auto max-w-3xl px-4 py-5">{children}</main>
-      <nav className="safe-bottom fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 px-2 pt-2 backdrop-blur">
-        <div className="mx-auto grid max-w-3xl grid-cols-5 gap-1">
+      <nav className="safe-bottom fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 px-1 pt-2 backdrop-blur">
+        <div className="mx-auto grid max-w-3xl grid-cols-6 gap-0.5">
           {items.map(([key, label, Icon]) => {
             const active = route === key
-            return <button key={key} onClick={() => navigate(key)} className={`flex min-h-14 flex-col items-center justify-center rounded-2xl px-1 text-[10px] font-bold ${active ? 'bg-blue-50 text-blue-800' : 'text-slate-500'}`}><Icon className="mb-1 h-5 w-5" />{label}</button>
+            return <button key={key} onClick={() => navigate(key)} className={`flex min-h-14 min-w-0 flex-col items-center justify-center rounded-2xl px-0.5 text-[9px] font-bold ${active ? 'bg-blue-50 text-blue-800' : 'text-slate-500'}`}><Icon className="mb-1 h-5 w-5" /><span className="max-w-full truncate">{label}</span></button>
           })}
         </div>
       </nav>

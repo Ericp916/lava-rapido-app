@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
-import { currency, localDayRange } from '../lib/format'
+import { currency, localDateKey, localDayRange } from '../lib/format'
 import { navigate } from '../hooks/useHashRoute'
 import StatCard from '../components/StatCard'
 import Loading from '../components/Loading'
-import { ChartIcon, ClockIcon, PlusIcon, SearchIcon, UsersIcon } from '../components/Icons'
+import { CashOutIcon, ChartIcon, ClockIcon, PlusIcon, SearchIcon, UsersIcon } from '../components/Icons'
 import { useAuth } from '../context/AuthContext'
 
 export default function DashboardPage() {
@@ -16,24 +16,34 @@ export default function DashboardPage() {
 
   async function load() {
     const { start, end } = localDayRange()
-    const [services, payments] = await Promise.all([
+    const today = localDateKey()
+    const [services, payments, expenses] = await Promise.all([
       supabase.from('atendimentos').select('valor,status_pagamento').gte('data_cadastro', start).lte('data_cadastro', end),
       supabase.from('atendimentos').select('valor').eq('status_pagamento', 'pago').gte('data_pagamento', start).lte('data_pagamento', end),
+      supabase.from('saidas').select('valor').eq('data_saida', today),
     ])
-    if (services.error || payments.error) { setError('Não foi possível carregar o resumo.'); return }
+    if (services.error || payments.error || expenses.error) { setError('Não foi possível carregar o resumo.'); return }
     const faturado = services.data.reduce((s, x) => s + Number(x.valor), 0)
     const pendente = services.data.filter(x => x.status_pagamento === 'pendente').reduce((s, x) => s + Number(x.valor), 0)
     const recebido = payments.data.reduce((s, x) => s + Number(x.valor), 0)
-    setStats({ faturado, recebido, pendente })
+    const saidas = expenses.data.reduce((s, x) => s + Number(x.valor), 0)
+    setStats({ faturado, recebido, pendente, saidas, saldo: recebido - saidas })
   }
 
   if (!stats && !error) return <Loading />
   return <>
     {error && <div className="mb-4 rounded-2xl bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</div>}
-    {stats && <div className="grid grid-cols-1 gap-3 sm:grid-cols-3"><StatCard label="Faturado hoje" value={currency.format(stats.faturado)} /><StatCard label="Recebido hoje" value={currency.format(stats.recebido)} tone="green" /><StatCard label="Pendente hoje" value={currency.format(stats.pendente)} tone="amber" /></div>}
+    {stats && <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+      <StatCard label="Faturado hoje" value={currency.format(stats.faturado)} />
+      <StatCard label="Recebido hoje" value={currency.format(stats.recebido)} tone="green" />
+      <StatCard label="Pendente hoje" value={currency.format(stats.pendente)} tone="amber" />
+      <StatCard label="Saídas hoje" value={currency.format(stats.saidas)} tone="red" />
+      <div className="col-span-2 sm:col-span-1"><StatCard label="Saldo hoje" value={currency.format(stats.saldo)} tone={stats.saldo >= 0 ? 'green' : 'red'} /></div>
+    </div>}
     <div className="mt-6 grid gap-3 sm:grid-cols-2">
       <Action icon={PlusIcon} title="Novo Atendimento" subtitle="Cadastrar em poucos cliques" onClick={() => navigate('novo')} primary />
       <Action icon={ClockIcon} title="Pendentes" subtitle="Cobrar e registrar pagamentos" onClick={() => navigate('pendentes')} />
+      <Action icon={CashOutIcon} title="Saídas" subtitle="Registrar gastos do caixa" onClick={() => navigate('saidas')} />
       <Action icon={SearchIcon} title="Histórico" subtitle="Buscar cliente ou veículo" onClick={() => navigate('historico')} />
       <Action icon={ChartIcon} title="Relatórios" subtitle="Diário, semanal e mensal" onClick={() => navigate('relatorios')} />
       {isAdmin && <Action icon={UsersIcon} title="Usuários" subtitle="Criar e gerenciar acessos" onClick={() => navigate('usuarios')} />}

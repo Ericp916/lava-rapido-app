@@ -3,6 +3,8 @@ export default function StatCard({ label, value, tone = 'blue' }) {
     blue: 'bg-blue-50 text-blue-800',
     green: 'bg-emerald-50 text-emerald-800',
     amber: 'bg-amber-50 text-amber-800',
+    red: 'bg-red-50 text-red-800',
+    slate: 'bg-slate-100 text-slate-800',
   }
-  return <div className={`rounded-3xl p-4 ${tones[tone]}`}><p className="text-xs font-bold uppercase tracking-wide opacity-70">{label}</p><p className="mt-2 text-xl font-black tracking-tight">{value}</p></div>
+  return <div className={`h-full rounded-3xl p-4 ${tones[tone] || tones.blue}`}><p className="text-xs font-bold uppercase tracking-wide opacity-70">{label}</p><p className="mt-2 text-xl font-black tracking-tight">{value}</p></div>
 }
