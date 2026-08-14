@@ -184,3 +184,15 @@ lava-rapido-app/
 ├─ vite.config.js
 └─ README.md
 ```
+
+---
+
+## Atualização — Gestão de usuários
+
+O projeto inclui a atualização `supabase/002_usuarios.sql` e duas Edge Functions em `supabase/functions/` para login por usuário/senha e gestão administrativa de acessos. Consulte `ATUALIZACAO-USUARIOS.md` antes de aplicar essa atualização em um projeto já em produção.
+
+## Módulo Saídas / Gastos
+
+A atualização `003_saidas.sql` adiciona o controle de saídas do caixa geral. Usuários ativos podem registrar justificativa, valor e data. O banco grava automaticamente o responsável pelo lançamento.
+
+A regra financeira é: **saldo do caixa = total recebido - total de saídas**. As saídas não reduzem o faturamento nem alteram os atendimentos. O Dashboard mostra saídas e saldo do dia; Relatórios inclui saídas e saldo no período; a exportação Excel recebe uma aba adicional chamada `Saídas`.

@@ -1,10 +1,11 @@
-ATUALIZAÇÃO 04 - USUÁRIOS
+Atualização 15 — acabamento final da tela de login
 
-IMPORTANTE: não basta descompactar e publicar.
-A ordem correta é:
-1) Executar supabase/002_usuarios.sql no SQL Editor.
-2) Criar/deployar a Edge Function auth-login.
-3) Criar/deployar a Edge Function manage-users.
-4) Só então copiar estes arquivos para o projeto React, testar e enviar ao GitHub.
+Alterações somente visuais:
+- card quase transparente;
+- textos brancos com sombra leve;
+- menos blur;
+- imagem de fundo mais visível;
+- inputs claros;
+- botão alinhado ao visual interno do app.
 
-Leia ATUALIZACAO-USUARIOS.md.
+Não altera banco, Supabase, autenticação ou telas internas.

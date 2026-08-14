@@ -22,6 +22,7 @@ create table if not exists public.veiculos (
 create table if not exists public.atendimentos (
   id uuid primary key default gen_random_uuid(),
   veiculo_id uuid not null references public.veiculos(id) on delete restrict,
+  descricao_servico text not null default '',
   valor numeric(10,2) not null check (valor > 0),
   forma_pagamento text not null check (forma_pagamento in ('pix','dinheiro','cartão')),
   status_pagamento text not null check (status_pagamento in ('pago','pendente')),
@@ -98,7 +99,8 @@ select
   v.veiculo,
   c.id as cliente_id,
   c.nome as cliente_nome,
-  c.telefone
+  c.telefone,
+  a.descricao_servico
 from public.atendimentos a
 join public.veiculos v on v.id = a.veiculo_id
 join public.clientes c on c.id = v.cliente_id;
