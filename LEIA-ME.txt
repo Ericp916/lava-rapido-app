@@ -1,11 +1,2 @@
-Atualização 15 — acabamento final da tela de login
-
-Alterações somente visuais:
-- card quase transparente;
-- textos brancos com sombra leve;
-- menos blur;
-- imagem de fundo mais visível;
-- inputs claros;
-- botão alinhado ao visual interno do app.
-
-Não altera banco, Supabase, autenticação ou telas internas.
+Ajuste 03 - corrige tela branca causada por nome incorreto da função de telefone no Ajuste 02.
+Substitua os arquivos sobre a pasta lava-rapido-app e reinicie o Vite.
