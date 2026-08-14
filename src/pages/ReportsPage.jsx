@@ -47,7 +47,7 @@ export default function ReportsPage() {
     ]
     const details = items.map(x => ({
       Data: dateTime.format(new Date(x.data_cadastro)), Cliente: x.cliente_nome, Telefone: x.telefone,
-      Veículo: x.veiculo, Placa: formatPlate(x.placa), Valor: Number(x.valor), 'Forma de pagamento': x.forma_pagamento,
+      Veículo: x.veiculo, Placa: formatPlate(x.placa), 'Descrição do serviço': x.descricao_servico || '', Valor: Number(x.valor), 'Forma de pagamento': x.forma_pagamento,
       Status: x.status_pagamento,
     }))
     const expenseDetails = expenses.map(x => ({

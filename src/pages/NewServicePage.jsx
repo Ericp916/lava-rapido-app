@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabase'
 import { currency, formatPlate, isValidPlate, normalizePlate, digitsOnly, parseMoneyInput, sanitizeMoneyInput } from '../lib/format'
 import { navigate } from '../hooks/useHashRoute'
 
-const empty = { placa: '', veiculo: '', nome: '', telefone: '', valor: '', forma_pagamento: 'PIX', status_pagamento: 'pago' }
+const empty = { placa: '', veiculo: '', nome: '', telefone: '', descricao_servico: '', valor: '', forma_pagamento: 'PIX', status_pagamento: 'pago' }
 
 export default function NewServicePage() {
   const [form, setForm] = useState(empty)
@@ -40,6 +40,7 @@ export default function NewServicePage() {
   async function submit(e) {
     e.preventDefault(); setMessage('')
     if (!isValidPlate(form.placa)) { setMessage('Informe uma placa válida. Ex.: ABC-1234 ou ABC-1D23.'); return }
+    if (form.descricao_servico.trim().length < 2) { setMessage('Descreva o serviço realizado no veículo.'); return }
     const value = parseMoneyInput(form.valor)
     if (!value || value <= 0) { setMessage('Informe um valor maior que zero.'); return }
     setSaving(true)
@@ -64,6 +65,7 @@ export default function NewServicePage() {
 
     const { error } = await supabase.from('atendimentos').insert({
       veiculo_id: currentVehicleId,
+      descricao_servico: form.descricao_servico.trim(),
       valor: value,
       forma_pagamento: form.forma_pagamento.toLowerCase(),
       status_pagamento: form.status_pagamento,
@@ -104,6 +106,18 @@ export default function NewServicePage() {
         inputMode="numeric"
         pattern="[0-9]*"
       />
+      <div>
+        <label className="label">Descrição do Serviço</label>
+        <textarea
+          className="input min-h-24 resize-y"
+          value={form.descricao_servico}
+          onChange={e => update('descricao_servico', e.target.value)}
+          placeholder="Ex.: Lavagem completa + remoção de ralado na porta"
+          maxLength={500}
+          required
+        />
+        <p className="mt-1 text-xs text-slate-500">Descreva o que foi realizado no veículo.</p>
+      </div>
       <div>
         <label className="label">Valor</label>
         <div className="flex w-full items-center rounded-2xl border border-slate-200 bg-white transition focus-within:border-blue-700 focus-within:ring-4 focus-within:ring-blue-100">
